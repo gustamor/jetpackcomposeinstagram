@@ -1,4 +1,4 @@
-package net.cursokotlin.jetpackcomposeinstagram.login
+package net.cursokotlin.jetpackcomposeinstagram.login.ui
 
 import android.util.Patterns
 import androidx.lifecycle.LiveData
