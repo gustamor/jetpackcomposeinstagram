@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.jetpackcomposeinstagram.LoginScreen
+import net.cursokotlin.jetpackcomposeinstagram.login.LoginViewModel
 import net.cursokotlin.jetpackcomposeinstagram.ui.theme.JetpackComposeInstagramTheme
 
 class MainActivity : ComponentActivity() {
@@ -34,6 +35,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun DefaultPreview() {
     JetpackComposeInstagramTheme {
-        LoginScreen()
+        LoginScreen(LoginViewModel())
     }
 }
