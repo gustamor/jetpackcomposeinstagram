@@ -4,14 +4,16 @@ import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.coroutineScope
+import net.cursokotlin.jetpackcomposeinstagram.login.ui.domain.LoginUseCase
 
 
 class LoginViewModel: ViewModel() {
 
+    private val _loginUseCase = LoginUseCase()
     private val _email = MutableLiveData<String>()
     private val _password = MutableLiveData<String>()
     private val _isLoginEnabled = MutableLiveData<Boolean>()
-
 
     val email : LiveData<String> = _email
     val password: LiveData<String> = _password

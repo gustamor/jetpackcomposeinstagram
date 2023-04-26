@@ -10,5 +10,4 @@ class LoginRepository {
        return api.doLogin(user,password)
     }
 
-
 }
