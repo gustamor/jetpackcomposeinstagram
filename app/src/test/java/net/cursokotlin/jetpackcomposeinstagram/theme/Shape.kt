@@ -1,4 +1,4 @@
-package net.cursokotlin.jetpackcomposeinstagram.ui.theme
+package net.cursokotlin.jetpackcomposeinstagram.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

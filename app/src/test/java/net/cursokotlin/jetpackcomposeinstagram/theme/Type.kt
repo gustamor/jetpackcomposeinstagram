@@ -1,4 +1,4 @@
-package net.cursokotlin.jetpackcomposeinstagram.ui.theme
+package net.cursokotlin.jetpackcomposeinstagram.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

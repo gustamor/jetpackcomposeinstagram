@@ -47,12 +47,10 @@ fun LoginScreen(loginViewModel: LoginViewModel) {
             ) {
                 CircularProgressIndicator()
             }
-
         } else {
             Header(Modifier.align(Alignment.TopEnd))
             Body(Modifier.align(Alignment.Center), loginViewModel)
             Footer(Modifier.align(Alignment.BottomCenter))
-
         }
     }
 }

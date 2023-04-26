@@ -1,4 +1,4 @@
-package net.cursokotlin.jetpackcomposeinstagram.ui.theme
+package net.cursokotlin.jetpackcomposeinstagram.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
