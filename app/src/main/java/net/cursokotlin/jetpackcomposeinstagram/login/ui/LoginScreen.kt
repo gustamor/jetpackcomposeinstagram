@@ -14,6 +14,8 @@ import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.Center
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -28,14 +30,30 @@ import net.cursokotlin.jetpackcomposeinstagram.R
 
 @Composable
 fun LoginScreen(loginViewModel: LoginViewModel) {
+
     Box(
         Modifier
             .fillMaxSize()
             .padding(8.dp)
     ) {
-        Header(Modifier.align(Alignment.TopEnd))
-        Body(Modifier.align(Alignment.Center), loginViewModel)
-        Footer(Modifier.align(Alignment.BottomCenter))
+        val isLoading: Boolean by loginViewModel.isLoading.observeAsState(initial = false)
+        if (isLoading) {
+            Box(
+                Modifier
+                    .fillMaxSize()
+                    .align(
+                        Center
+                    )
+            ) {
+                CircularProgressIndicator()
+            }
+
+        } else {
+            Header(Modifier.align(Alignment.TopEnd))
+            Body(Modifier.align(Alignment.Center), loginViewModel)
+            Footer(Modifier.align(Alignment.BottomCenter))
+
+        }
     }
 }
 
@@ -48,9 +66,11 @@ fun Footer(modifier: Modifier) {
                 .height(1.dp)
                 .fillMaxWidth()
         )
+
         Spacer(modifier = Modifier.size(24.dp))
         SignUp()
         Spacer(modifier = Modifier.size(24.dp))
+
 
     }
 }
@@ -77,7 +97,7 @@ fun Body(modifier: Modifier, loginViewModel: LoginViewModel) {
 
     val email: String by loginViewModel.email.observeAsState(initial = "")
     val password: String by loginViewModel.password.observeAsState(initial = "")
-    val isLoginEnabled : Boolean by loginViewModel.isLoginEnabled.observeAsState(initial = false)
+    val isLoginEnabled: Boolean by loginViewModel.isLoginEnabled.observeAsState(initial = false)
 
     Column(modifier = modifier) {
         ImageLogo(Modifier.align(Alignment.CenterHorizontally))
@@ -88,7 +108,7 @@ fun Body(modifier: Modifier, loginViewModel: LoginViewModel) {
         Spacer(modifier = Modifier.size(8.dp))
         ForgotPassword(Modifier.align(Alignment.End))
         Spacer(modifier = Modifier.size(16.dp))
-        LoginButton(isLoginEnabled)
+        LoginButton(isLoginEnabled, loginViewModel)
         Spacer(modifier = Modifier.size(16.dp))
         LoginDivider()
         Spacer(modifier = Modifier.size(32.dp))
@@ -145,8 +165,12 @@ fun LoginDivider() {
 }
 
 @Composable
-fun LoginButton(loginEnabled: Boolean) {
-    Button(onClick = { }, enabled = loginEnabled, modifier = Modifier.fillMaxWidth()) {
+fun LoginButton(loginEnabled: Boolean, loginViewModel: LoginViewModel) {
+    Button(
+        onClick = { loginViewModel.onLoginSelected() },
+        enabled = loginEnabled,
+        modifier = Modifier.fillMaxWidth()
+    ) {
         Text(text = "Log in")
     }
 }
@@ -173,27 +197,27 @@ fun Password(password: String, onTextChanged: (String) -> Unit) {
         value = password,
         onValueChange = { onTextChanged(it) },
         modifier = Modifier.fillMaxWidth(),
-        placeholder = {Text(text="Password")},
+        placeholder = { Text(text = "Password") },
         maxLines = 1,
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
         colors = TextFieldDefaults.textFieldColors(
-            textColor =  Color(0xFFB2B2B2),
+            textColor = Color(0xFFB2B2B2),
             backgroundColor = Color(0xFFFAFAFA),
             focusedIndicatorColor = androidx.compose.ui.graphics.Color.Transparent,
             unfocusedIndicatorColor = androidx.compose.ui.graphics.Color.Transparent
         ),
         trailingIcon = {
-            val image = if(passwordVisibility) {
+            val image = if (passwordVisibility) {
                 Icons.Filled.VisibilityOff
             } else {
                 Icons.Filled.Visibility
             }
-            IconButton(onClick = {passwordVisibility  = !passwordVisibility}) {
+            IconButton(onClick = { passwordVisibility = !passwordVisibility }) {
                 Icon(imageVector = image, contentDescription = "show password")
             }
         },
-        visualTransformation = if (passwordVisibility){
+        visualTransformation = if (passwordVisibility) {
             VisualTransformation.None
         } else {
             PasswordVisualTransformation()
@@ -213,7 +237,7 @@ fun Email(email: String, onTextChanged: (String) -> Unit) {
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
         colors = TextFieldDefaults.textFieldColors(
-            textColor =  Color(0xFFB2B2B2),
+            textColor = Color(0xFFB2B2B2),
             backgroundColor = Color(0xFFFAFAFA),
             focusedIndicatorColor = androidx.compose.ui.graphics.Color.Transparent,
             unfocusedIndicatorColor = androidx.compose.ui.graphics.Color.Transparent
